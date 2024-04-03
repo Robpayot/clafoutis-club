@@ -3,6 +3,8 @@ import { lerp, distance } from '@/js/utils/Math'
 import gsap from 'gsap'
 import DATA from '../../data/timestamps.json'
 import { getRandomInt, roundTo } from '../utils/Math'
+import { Howl, Howler } from 'howler'
+import { isTouch } from '../utils/isTouch'
 
 export default class Game {
   el
@@ -21,6 +23,7 @@ export default class Game {
   spacingCoef = 500
   score = 0
   deltaInput = 0
+  isTouch = isTouch()
 
   constructor(el) {
     this.el = el
@@ -30,6 +33,11 @@ export default class Game {
     this.scoreEl = document.querySelector('[data-game-score]')
     this.scoreMessageEl = document.querySelector('[data-game-score-message]')
     this.startEl = document.querySelector('[data-intro-start]')
+    this.controlsEl = document.querySelectorAll('[data-game-control]')
+
+    if (this.isTouch) {
+      document.body.classList.add('is-touch')
+    }
     this.handleResize()
     this.setGUI()
     this.events()
@@ -42,11 +50,20 @@ export default class Game {
   }
 
   events() {
+    document.body.addEventListener('click', this.initSound)
+
     this.startEl.addEventListener('click', this.startGame)
     window.addEventListener('resize', this.handleResize, false)
-    window.addEventListener('keydown', this.handleKeydown)
-    window.addEventListener('keyup', this.handleKeyup)
-    // if (!this.isTouch)
+
+    if (this.isTouch) {
+      this.controlsEl.forEach((el) => {
+        el.addEventListener('touchstart', this.handleControlStart)
+        el.addEventListener('touchend', this.handleControlEnd)
+      })
+    } else {
+      window.addEventListener('keydown', this.handleKeydown)
+      window.addEventListener('keyup', this.handleKeyup)
+    }
   }
 
   setArrows() {
@@ -78,7 +95,30 @@ export default class Game {
     })
   }
 
+  initSound = () => {
+    if (this.init) return
+    this.init = true
+
+    this.howlPlayer = new Howl({
+      src: ['./vitesse-de-croisiere.mp3'],
+      loop: true,
+      // volume: initVolume,
+    })
+  }
+
   handleResize = () => {}
+
+  handleControlStart = (e) => {
+    const key = parseInt(e.target.dataset.gameControl)
+    this.input = key
+    this.deltaInput = this.delta
+    this.checkValues()
+  }
+
+  handleControlEnd = (e) => {
+    this.input = ''
+    this.scoreMessageEl.innerHTML = ''
+  }
 
   handleKeydown = (e) => {
     switch (e.keyCode) {
@@ -136,6 +176,7 @@ export default class Game {
   }
 
   startGame = () => {
+    if (!this.init) return
     // this.timeStart = Date.now()
     this.dataDir.forEach((el) => {
       el.found = false
@@ -146,6 +187,9 @@ export default class Game {
     this.arrows.style.transform = `translateX(50vw)`
     this.delta = this.deltaTime = 0
     gsap.ticker.add(this.handleRAF)
+    this.howlPlayer.pause()
+    this.howlPlayer.seek(0)
+    this.howlPlayer.play()
   }
 
   handleRAF = (time, o) => {

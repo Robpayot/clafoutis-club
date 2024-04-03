@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "gsap": "^3.11.3",
+    "howler": "^2.2.4",
     "lil-gui": "^0.17.0"
   }
 }
