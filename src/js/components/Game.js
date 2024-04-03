@@ -17,6 +17,7 @@ export default class Game {
     x: 0,
     y: 0,
   }
+  startOffset = 1
   spacingCoef = 500
   score = 0
   deltaInput = 0
@@ -45,9 +46,7 @@ export default class Game {
     window.addEventListener('resize', this.handleResize, false)
     window.addEventListener('keydown', this.handleKeydown)
     window.addEventListener('keyup', this.handleKeyup)
-    if (!this.isTouch) {
-      window.addEventListener('mousemove', this.handleMousemove)
-    }
+    // if (!this.isTouch)
   }
 
   setArrows() {
@@ -56,9 +55,24 @@ export default class Game {
       const div = document.createElement('div')
       div.classList.add('game__arrow')
 
-      div.style.transform = `translate(-50%, -50%) translateX(${value * this.spacingCoef}px)`
+      const dir = getRandomInt(4)
 
-      this.dataDir.push({ time: value, dir: getRandomInt(4) })
+      switch (dir) {
+        case 0:
+          div.style.transform = `translate(-50%, -50%) translateX(${value * this.spacingCoef}px)`
+          break
+        case 1:
+          div.style.transform = `translate(-50%, -50%) translateX(${value * this.spacingCoef}px) rotate(90deg)`
+          break
+        case 2:
+          div.style.transform = `translate(-50%, -50%) translateX(${value * this.spacingCoef}px) rotate(180deg)`
+          break
+        case 3:
+          div.style.transform = `translate(-50%, -50%) translateX(${value * this.spacingCoef}px) rotate(270deg)`
+          break
+      }
+
+      this.dataDir.push({ time: value, dir, found: false })
 
       this.arrows.appendChild(div)
     })
@@ -72,26 +86,26 @@ export default class Game {
       case 65: // a
       case 81: // q
         // left
-        this.input = 'left'
+        this.input = 3
         this.deltaInput = this.delta
         break
       case 38:
       case 87: // w
       case 90: // z
         // up
-        this.input = 'up'
+        this.input = 0
         this.deltaInput = this.delta
         break
       case 39:
       case 68: // d
         // right
-        this.input = 'right'
+        this.input = 1
         this.deltaInput = this.delta
         break
       case 40:
       case 83: // s
         // down
-        this.input = 'down'
+        this.input = 2
         this.deltaInput = this.delta
         break
     }
@@ -123,6 +137,9 @@ export default class Game {
 
   startGame = () => {
     // this.timeStart = Date.now()
+    this.dataDir.forEach((el) => {
+      el.found = false
+    })
     this.score = 0
     this.scoreEl.innerHTML = this.score
     this.timeStart = null
@@ -147,16 +164,17 @@ export default class Game {
     const margin = this.guiObj.marginError
     // for each arrows, check if input values are good
     for (let i = 0; i < this.dataDir.length; i++) {
-      const { time } = this.dataDir[i]
+      const { time, dir, found } = this.dataDir[i]
 
       if (time + margin > this.delta) {
         // arrow not played yet
-        if (time + margin > this.deltaInput && time - margin < this.deltaInput) {
+        if (time + margin > this.deltaInput && time - margin < this.deltaInput && !found && this.input === dir) {
           // deltaInput is inside this period
           // console.log('good!')
           this.scoreMessageEl.innerHTML = 'Good!'
           this.score++
           this.scoreEl.innerHTML = this.score
+          this.dataDir[i].found = true
         } else {
           this.scoreMessageEl.innerHTML = 'Bad!'
           this.score--
@@ -167,15 +185,5 @@ export default class Game {
         break
       }
     }
-  }
-
-  handleMousemove = (e) => {
-    const x = (e.clientX / window.innerWidth) * 2 - 1
-    const y = (e.clientY / window.innerHeight) * 2 - 1
-
-    const dist = distance(0, 0, x, y)
-
-    this.mouse.x = dist > 0.75 ? 0 : x
-    this.mouse.y = dist > 0.75 ? 0 : y
   }
 }
