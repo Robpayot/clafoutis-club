@@ -1,7 +1,7 @@
-import Component from '@/js/components/component'
+import Game from '@/js/components/Game'
 
-(() => {
+;(() => {
   // component
-  const el = document.querySelector('[data-component]')
-  new Component(el)
+  const el = document.querySelector('[data-game]')
+  new Game(el)
 })()

@@ -1,0 +1,65 @@
+.game {
+  height: 100%;
+  position: fixed;
+  width: 100%;
+  text-align: center;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__arrows {
+    white-space: nowrap;
+    display: flex;
+    width: 100vw;
+    transform: translateX(50vw);
+    position: relative;
+  }
+
+  &__arrow {
+    width: 30px;
+    height: 30px;
+    background-color: black;
+    position: absolute;
+  }
+
+  &__time {
+    position: absolute;
+    top: calc(50% - 200px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    // text-align: right;
+  }
+
+  &__score-message {
+    position: absolute;
+    top: calc(50% - 50px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    font-size: 30px;
+    // text-align: right;
+  }
+
+  &__score {
+    font-size: 50px;
+    margin-bottom: 20px;
+  }
+}
+
+.intro {
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  &__start {
+    position: absolute;
+    top: calc(50% + 100px);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 100;
+  }
+}

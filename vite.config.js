@@ -3,7 +3,7 @@ import * as path from 'path'
 
 export default defineConfig({
   root: 'src',
-  base: '/vite-template/', // for Github pages, otherwise use './'
+  base: '/clafoutis-club/', // for Github pages, otherwise use './'
   build: {
     outDir: '../dist',
   },

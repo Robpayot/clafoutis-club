@@ -9,3 +9,11 @@ export function distance(x1, y1, x2, y2) {
 
   return Math.sqrt(a * a + b * b)
 }
+
+export function roundTo(val, dec) {
+  return Math.floor(val * dec) / dec
+}
+
+export function getRandomInt(max) {
+  return Math.floor(Math.random() * max)
+}
