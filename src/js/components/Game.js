@@ -27,6 +27,7 @@ export default class Game {
 
   constructor(el) {
     this.el = el
+    this.enterEl = document.querySelector('[data-intro-enter]')
     this.arrows = this.el.querySelector('[data-game-arrows]')
     this.timeEl = document.querySelector('[data-game-time]')
     this.timeInputEl = document.querySelector('[data-game-time-input]')
@@ -50,7 +51,7 @@ export default class Game {
   }
 
   events() {
-    document.body.addEventListener('click', this.initSound)
+    this.enterEl.addEventListener('click', this.initSound)
 
     this.startEl.addEventListener('click', this.startGame)
     window.addEventListener('resize', this.handleResize, false)
@@ -98,6 +99,8 @@ export default class Game {
   initSound = () => {
     if (this.init) return
     this.init = true
+    this.el.classList.add('visible')
+    this.enterEl.style.display = 'none'
 
     this.howlPlayer = new Howl({
       src: ['./vitesse-de-croisiere.mp3'],
