@@ -38,7 +38,7 @@ export default class Game {
 
   setGUI() {
     const gui = new GUI()
-    gui.add(this.guiObj, 'marginError', 0, 0.5)
+    gui.add(this.guiObj, 'marginError', 0, 0.2)
   }
 
   events() {
