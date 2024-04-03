@@ -16,22 +16,32 @@
     <meta name="author" content="robin payot, robpayot@gmail.com" />
     <meta name="developer" content="" />
     <link rel="canonical" href="https://robpayot.github.io/vite-2d-shader-template/dist/" /> -->
-    <script type="module" crossorigin src="/clafoutis-club/assets/index-8300a33e.js"></script>
-    <link rel="stylesheet" href="/clafoutis-club/assets/index-debaccb5.css">
+    <script type="module" crossorigin src="/clafoutis-club/assets/index-df79234c.js"></script>
+    <link rel="stylesheet" href="/clafoutis-club/assets/index-46f15d3e.css">
   </head>
   <body>
     <main>
       <section class="intro">
-        <h1 data-intro-start class="intro__start">Start / Restart</h1>
+        <div data-intro-enter class="intro__enter">Enter</div>
       </section>
       <section data-game class="game">
-        <div class="game__time">
-          <p class="game__score">Score: <span data-game-score>0</span> / 10</p>
-          <p>Input: <span data-game-time-input></span></p>
-          <p>Time: <span data-game-time></span></p>
+        <div class="game__container">
+          <h1 data-intro-start class="game__start">Start / Restart</h1>
+
+          <div class="game__time">
+            <p class="game__score">Score: <span data-game-score>0</span> / 10</p>
+            <p>Input: <span data-game-time-input></span></p>
+            <p>Time: <span data-game-time></span></p>
+          </div>
+          <div data-game-arrows class="game__arrows"></div>
+          <div data-game-score-message class="game__score-message"></div>
+          <div class="game__controls">
+            <div data-game-control="0" class="game__control"></div>
+            <div data-game-control="1" class="game__control"></div>
+            <div data-game-control="2" class="game__control"></div>
+            <div data-game-control="3" class="game__control"></div>
+          </div>
         </div>
-        <div data-game-arrows class="game__arrows"></div>
-        <div data-game-score-message class="game__score-message"></div>
       </section>
     </main>
   </body>
