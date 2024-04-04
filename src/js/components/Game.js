@@ -122,7 +122,7 @@ export default class Game {
         setTimeout(() => {
           this.el.classList.add('visible')
           this.loaderEl.classList.remove('visible')
-        }, 0)
+        }, 1200)
       },
     })
   }
