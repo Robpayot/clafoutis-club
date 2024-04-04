@@ -44,21 +44,53 @@
     transition: opacity 0.5s ease, visibility 0.5s ease;
   }
 
+  &__overlay {
+    height: 200px;
+    width: 50vw;
+    position: relative;
+    // overflow: hidden;
+    transform: translateX(50%);
+    display: flex;
+    align-items: center;
+  }
+
   &__arrows {
     white-space: nowrap;
     display: flex;
     width: 100vw;
-    transform: translateX(50vw);
-    position: relative;
   }
 
   &__arrow {
-    width: 30px;
-    height: 30px;
+    width: 60px;
+    height: 60px;
     // background-color: black;
     position: absolute;
-    background-image: url('/img/up-arrow-w.png');
-    background-size: contain;
+
+    display: block;
+
+    &-inner {
+      transform: scale(1);
+      opacity: 1;
+      background-image: url('/img/up-arrow-w.png');
+      background-size: contain;
+      width: 100%;
+      height: 100%;
+    }
+
+    &.passed {
+      .game__arrow-inner {
+        transform: scale(2);
+        opacity: 0;
+        transition: opacity 0.3s linear 0.1s, transform 0.3s var(--ease-out-bounce);
+      }
+    }
+
+    &.missed {
+      .game__arrow-inner {
+        opacity: 0;
+        transition: opacity 0.3s linear 0.1s;
+      }
+    }
   }
 
   &__time {
@@ -73,12 +105,22 @@
 
   &__score-message {
     position: absolute;
-    top: calc(50% - 50px);
+    top: calc(50% - 100px);
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
     font-size: 40px;
     // text-align: right;
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 0;
+    transition: opacity 0.15s linear, transform 0.15s var(--ease-out-bounce) 0.5s;
+    will-change: transform;
+
+    &.visible {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      transition: opacity 0.15s linear, transform 0.15s var(--ease-out-bounce);
+    }
   }
 
   &__score {
@@ -146,6 +188,14 @@
   z-index: 100;
   color: white;
   font-size: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
 
   &__enter {
     position: absolute;
@@ -154,6 +204,32 @@
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
+    z-index: 100;
+  }
+}
+
+.loader {
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  color: white;
+  font-size: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+  position: absolute;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &__text {
+    position: absolute;
+    font-size: 50px;
+    top: calc(50% + 100px);
+    left: 50%;
+    transform: translate(-50%, -50%);
     z-index: 100;
   }
 }

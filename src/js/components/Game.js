@@ -20,14 +20,18 @@ export default class Game {
     y: 0,
   }
   startOffset = 1
-  spacingCoef = 500
+  spacingCoef = 600
   score = 0
   deltaInput = 0
+  cumulate = false
+  cumul = 0
   isTouch = isTouch()
 
   constructor(el) {
     this.el = el
+    this.introEl = document.querySelector('[data-intro]')
     this.enterEl = document.querySelector('[data-intro-enter]')
+    this.loaderEl = document.querySelector('[data-loader]')
     this.arrows = this.el.querySelector('[data-game-arrows]')
     this.timeEl = document.querySelector('[data-game-time]')
     this.timeInputEl = document.querySelector('[data-game-time-input]')
@@ -70,27 +74,35 @@ export default class Game {
   setArrows() {
     this.dataDir = []
     DATA.forEach((value, i) => {
+      const time = value[0]
+      const dir = value[1]
+      let dirNb
       const div = document.createElement('div')
       div.classList.add('game__arrow')
-
-      const dir = getRandomInt(4)
+      const inner = document.createElement('div')
+      inner.classList.add('game__arrow-inner')
+      div.appendChild(inner)
 
       switch (dir) {
-        case 0:
-          div.style.transform = `translate(-50%, -50%) translateX(${value * this.spacingCoef}px)`
+        case 'u':
+          dirNb = 0
+          div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px)`
           break
-        case 1:
-          div.style.transform = `translate(-50%, -50%) translateX(${value * this.spacingCoef}px) rotate(90deg)`
+        case 'r':
+          dirNb = 1
+          div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(90deg)`
           break
-        case 2:
-          div.style.transform = `translate(-50%, -50%) translateX(${value * this.spacingCoef}px) rotate(180deg)`
+        case 'd':
+          dirNb = 2
+          div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(180deg)`
           break
-        case 3:
-          div.style.transform = `translate(-50%, -50%) translateX(${value * this.spacingCoef}px) rotate(270deg)`
+        case 'l':
+          dirNb = 3
+          div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(270deg)`
           break
       }
 
-      this.dataDir.push({ time: value, dir, found: false })
+      this.dataDir.push({ time, dir: dirNb, found: false, div })
 
       this.arrows.appendChild(div)
     })
@@ -99,13 +111,19 @@ export default class Game {
   initSound = () => {
     if (this.init) return
     this.init = true
-    this.el.classList.add('visible')
-    this.enterEl.style.display = 'none'
+    this.loaderEl.classList.add('visible')
+    this.introEl.classList.remove('visible')
 
     this.howlPlayer = new Howl({
-      src: ['./vitesse-de-croisiere.mp3'],
-      loop: true,
+      src: ['./backtrack.mp3'],
+      loop: false,
       // volume: initVolume,
+      onload: () => {
+        setTimeout(() => {
+          this.el.classList.add('visible')
+          this.loaderEl.classList.remove('visible')
+        }, 0)
+      },
     })
   }
 
@@ -120,7 +138,7 @@ export default class Game {
 
   handleControlEnd = (e) => {
     this.input = ''
-    this.scoreMessageEl.innerHTML = ''
+    // this.scoreMessageEl.innerHTML = ''
   }
 
   handleKeydown = (e) => {
@@ -175,7 +193,7 @@ export default class Game {
         break
     }
 
-    this.scoreMessageEl.innerHTML = ''
+    // this.scoreMessageEl.innerHTML = ''
   }
 
   startGame = () => {
@@ -183,6 +201,8 @@ export default class Game {
     // this.timeStart = Date.now()
     this.dataDir.forEach((el) => {
       el.found = false
+      el.div.classList.remove('missed')
+      el.div.classList.remove('passed')
     })
     this.score = 0
     this.scoreEl.innerHTML = this.score
@@ -201,31 +221,77 @@ export default class Game {
     const delta = time - this.timeStart
     this.delta = delta
 
-    this.arrows.style.transform = `translateX(50vw) translateX(-${delta * this.spacingCoef}px)`
+    this.arrows.style.transform = `translateX(-${delta * this.spacingCoef}px)`
 
     this.timeEl.innerHTML = roundTo(this.delta, 10)
     this.timeInputEl.innerHTML = roundTo(this.deltaInput, 10)
+    const margin = this.guiObj.marginError
+    for (let i = 0; i < this.dataDir.length; i++) {
+      const { time, div } = this.dataDir[i]
+
+      if (time + margin + 0.2 <= this.delta) {
+        div.classList.add('missed')
+      }
+    }
   }
 
   checkValues() {
     const margin = this.guiObj.marginError
+    clearTimeout(this.timeoutMsg)
     // for each arrows, check if input values are good
     for (let i = 0; i < this.dataDir.length; i++) {
-      const { time, dir, found } = this.dataDir[i]
+      const { time, dir, found, div } = this.dataDir[i]
 
       if (time + margin > this.delta) {
         // arrow not played yet
-        if (time + margin > this.deltaInput && time - margin < this.deltaInput && !found && this.input === dir) {
+        if (time + margin > this.deltaInput && time - margin <= this.deltaInput && !found && this.input === dir) {
           // deltaInput is inside this period
           // console.log('good!')
           this.scoreMessageEl.innerHTML = 'Good!'
-          this.score++
+          this.cumulate = true
+
+          this.cumul += 1
+
+          let points = 100
+
+          if (this.cumul >= 20) {
+            points *= 5
+            this.scoreMessageEl.innerHTML = 'x5!'
+          } else if (this.cumul >= 15) {
+            points *= 4
+            this.scoreMessageEl.innerHTML = 'x4!'
+          } else if (this.cumul >= 10) {
+            points *= 3
+            this.scoreMessageEl.innerHTML = 'x3!'
+          } else if (this.cumul >= 5) {
+            points *= 2
+            this.scoreMessageEl.innerHTML = 'x2!'
+          }
+
+          this.scoreMessageEl.classList.add('visible')
+
+          this.timeoutMsg = setTimeout(() => {
+            this.scoreMessageEl.classList.remove('visible')
+          }, 300)
+
+          this.score += points
+
           this.scoreEl.innerHTML = this.score
           this.dataDir[i].found = true
+          div.classList.add('passed')
         } else {
+          this.cumul = 0
+          this.cumulate = false
           this.scoreMessageEl.innerHTML = 'Bad!'
-          this.score--
+
+          this.scoreMessageEl.classList.add('visible')
+
+          this.timeoutMsg = setTimeout(() => {
+            this.scoreMessageEl.classList.remove('visible')
+          }, 300)
+          // this.score--
           // console.log('bad!')
+          div.classList.add('missed')
 
           this.scoreEl.innerHTML = this.score
         }
