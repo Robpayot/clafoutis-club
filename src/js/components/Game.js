@@ -26,6 +26,8 @@ export default class Game {
   cumulate = false
   cumul = 0
   isTouch = isTouch()
+  isMobile = window.innerWidth < window.innerHeight
+  maxBonus = 1
 
   constructor(el) {
     this.el = el
@@ -39,6 +41,10 @@ export default class Game {
     this.scoreMessageEl = document.querySelector('[data-game-score-message]')
     this.startEl = document.querySelector('[data-intro-start]')
     this.controlsEl = document.querySelectorAll('[data-game-control]')
+
+    if (this.isMobile) {
+      document.body.classList.add('is-mobile')
+    }
 
     if (this.isTouch) {
       document.body.classList.add('is-touch')
@@ -86,19 +92,36 @@ export default class Game {
       switch (dir) {
         case 'u':
           dirNb = 0
-          div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px)`
+          if (this.isMobile) {
+            div.style.transform = `translate(0%, -50%) translateY(-${time * this.spacingCoef}px)`
+          } else {
+            div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px)`
+          }
           break
         case 'r':
           dirNb = 1
-          div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(90deg)`
+          if (this.isMobile) {
+            div.style.transform = `translate(0%, -50%) translateY(-${time * this.spacingCoef}px) rotate(90deg)`
+          } else {
+            div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(90deg)`
+          }
+
           break
         case 'd':
           dirNb = 2
-          div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(180deg)`
+          if (this.isMobile) {
+            div.style.transform = `translate(0%, -50%) translateY(-${time * this.spacingCoef}px) rotate(180deg)`
+          } else {
+            div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(180deg)`
+          }
           break
         case 'l':
           dirNb = 3
-          div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(270deg)`
+          if (this.isMobile) {
+            div.style.transform = `translate(0%, -50%) translateY(-${time * this.spacingCoef}px) rotate(270deg)`
+          } else {
+            div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(270deg)`
+          }
           break
       }
 
@@ -124,6 +147,7 @@ export default class Game {
           this.loaderEl.classList.remove('visible')
         }, 1200)
       },
+      onend: this.endGame,
     })
   }
 
@@ -198,6 +222,8 @@ export default class Game {
 
   startGame = () => {
     if (!this.init) return
+    this.el.classList.remove('end')
+    this.el.classList.add('start')
     // this.timeStart = Date.now()
     this.dataDir.forEach((el) => {
       el.found = false
@@ -215,13 +241,25 @@ export default class Game {
     this.howlPlayer.play()
   }
 
+  endGame = () => {
+    this.scoreMessageEl.classList.add('visible')
+    this.scoreMessageEl.classList.remove('lose')
+    this.scoreMessageEl.classList.remove('win')
+    this.scoreMessageEl.innerHTML = `Congrats! Bonus max: x${this.maxBonus}`
+    this.el.classList.remove('start')
+    this.el.classList.add('end')
+  }
+
   handleRAF = (time, o) => {
     if (!this.timeStart) this.timeStart = time
 
     const delta = time - this.timeStart
     this.delta = delta
-
-    this.arrows.style.transform = `translateX(-${delta * this.spacingCoef}px)`
+    if (this.isMobile) {
+      this.arrows.style.transform = `translateY(${delta * this.spacingCoef}px)`
+    } else {
+      this.arrows.style.transform = `translateX(-${delta * this.spacingCoef}px)`
+    }
 
     this.timeEl.innerHTML = roundTo(this.delta, 10)
     this.timeInputEl.innerHTML = roundTo(this.deltaInput, 10)
@@ -257,18 +295,32 @@ export default class Game {
           if (this.cumul >= 20) {
             points *= 5
             this.scoreMessageEl.innerHTML = 'x5!'
+            if (this.maxBonus < 5) {
+              this.maxBonus = 5
+            }
           } else if (this.cumul >= 15) {
             points *= 4
             this.scoreMessageEl.innerHTML = 'x4!'
+            if (this.maxBonus < 4) {
+              this.maxBonus = 4
+            }
           } else if (this.cumul >= 10) {
             points *= 3
             this.scoreMessageEl.innerHTML = 'x3!'
+            if (this.maxBonus < 3) {
+              this.maxBonus = 3
+            }
           } else if (this.cumul >= 5) {
             points *= 2
             this.scoreMessageEl.innerHTML = 'x2!'
+            if (this.maxBonus < 2) {
+              this.maxBonus = 2
+            }
           }
 
           this.scoreMessageEl.classList.add('visible')
+          this.scoreMessageEl.classList.add('win')
+          this.scoreMessageEl.classList.remove('lose')
 
           this.timeoutMsg = setTimeout(() => {
             this.scoreMessageEl.classList.remove('visible')
@@ -285,6 +337,8 @@ export default class Game {
           this.scoreMessageEl.innerHTML = 'Bad!'
 
           this.scoreMessageEl.classList.add('visible')
+          this.scoreMessageEl.classList.remove('win')
+          this.scoreMessageEl.classList.add('lose')
 
           this.timeoutMsg = setTimeout(() => {
             this.scoreMessageEl.classList.remove('visible')

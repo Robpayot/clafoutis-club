@@ -15,6 +15,20 @@
   color: white;
   font-size: 20px;
 
+  &.start {
+    .game__start {
+      transform: translate(-50%, 0%) translateY(50vh);
+      transition: transform 0.6s var(--ease-out-quad);
+    }
+  }
+
+  &.end {
+    .game__start {
+      transform: translate(-50%, -50%);
+      transition: transform 0.6s var(--ease-out-quad);
+    }
+  }
+
   &.visible {
     .game__container {
       opacity: 1;
@@ -52,12 +66,24 @@
     transform: translateX(50%);
     display: flex;
     align-items: center;
+
+    .is-mobile & {
+      width: 100vw;
+      height: 50vh;
+      transform: translateY(-50%);
+      border-bottom: 1px solid white;
+    }
   }
 
   &__arrows {
     white-space: nowrap;
     display: flex;
     width: 100vw;
+
+    .is-mobile & {
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   &__arrow {
@@ -88,7 +114,7 @@
     &.missed {
       .game__arrow-inner {
         opacity: 0;
-        transition: opacity 0.3s linear 0.1s;
+        transition: opacity 0.15s linear 0s;
       }
     }
   }
@@ -101,6 +127,11 @@
     z-index: 100;
     width: 100%;
     // text-align: right;
+
+    .is-mobile & {
+      font-size: 20px;
+      text-align: left;
+    }
   }
 
   &__score-message {
@@ -110,11 +141,18 @@
     transform: translate(-50%, -50%);
     z-index: 100;
     font-size: 40px;
-    // text-align: right;
     transform: translate(-50%, -50%) scale(0.4);
     opacity: 0;
     transition: opacity 0.15s linear, transform 0.15s var(--ease-out-bounce) 0.5s;
     will-change: transform;
+
+    &.win {
+      color: #26ea2e;
+    }
+
+    &.lose {
+      color: #f10000;
+    }
 
     &.visible {
       opacity: 1;
@@ -126,6 +164,10 @@
   &__score {
     font-size: 50px;
     margin-bottom: 20px;
+
+    .is-mobile & {
+      font-size: 20px;
+    }
   }
 
   &__controls {
@@ -173,8 +215,9 @@
   }
 
   &__start {
+    font-size: 50px;
     position: absolute;
-    top: calc(50% + 100px);
+    top: calc(50%);
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -200,7 +243,7 @@
   &__enter {
     position: absolute;
     font-size: 50px;
-    top: calc(50% + 100px);
+    top: calc(50%);
     left: 50%;
     transform: translate(-50%, -50%);
     cursor: pointer;
@@ -227,7 +270,7 @@
   &__text {
     position: absolute;
     font-size: 50px;
-    top: calc(50% + 100px);
+    top: calc(50%);
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
@@ -236,4 +279,5 @@
 
 .roboto {
   font-family: 'Roboto Slab', serif;
+  display: none;
 }
