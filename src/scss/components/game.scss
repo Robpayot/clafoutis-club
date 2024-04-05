@@ -66,12 +66,14 @@
     transform: translateX(50%);
     display: flex;
     align-items: center;
+    border-left: 1px solid white;
 
     .is-mobile & {
       width: 100vw;
       height: 50vh;
-      transform: translateY(-50%);
+      transform: translateY(-20%);
       border-bottom: 1px solid white;
+      align-items: end;
     }
   }
 
@@ -93,6 +95,11 @@
     position: absolute;
 
     display: block;
+
+    .is-mobile & {
+      width: 40px;
+      height: 40px;
+    }
 
     &-inner {
       transform: scale(1);
@@ -145,6 +152,10 @@
     opacity: 0;
     transition: opacity 0.15s linear, transform 0.15s var(--ease-out-bounce) 0.5s;
     will-change: transform;
+
+    .is-mobile & {
+      top: calc(70%);
+    }
 
     &.win {
       color: #26ea2e;
@@ -274,6 +285,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 100;
+
+    .is-mobile & {
+      font-size: 36px;
+    }
   }
 }
 

@@ -20,7 +20,7 @@ export default class Game {
     y: 0,
   }
   startOffset = 1
-  spacingCoef = 600
+  spacingCoef = 500
   score = 0
   deltaInput = 0
   cumulate = false
@@ -44,6 +44,8 @@ export default class Game {
 
     if (this.isMobile) {
       document.body.classList.add('is-mobile')
+
+      this.spacingCoef = 300
     }
 
     if (this.isTouch) {
@@ -93,7 +95,7 @@ export default class Game {
         case 'u':
           dirNb = 0
           if (this.isMobile) {
-            div.style.transform = `translate(0%, -50%) translateY(-${time * this.spacingCoef}px)`
+            div.style.transform = `translate(0%, 0%) translateY(-${time * this.spacingCoef}px)`
           } else {
             div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px)`
           }
@@ -101,7 +103,7 @@ export default class Game {
         case 'r':
           dirNb = 1
           if (this.isMobile) {
-            div.style.transform = `translate(0%, -50%) translateY(-${time * this.spacingCoef}px) rotate(90deg)`
+            div.style.transform = `translate(0%, 0%) translateY(-${time * this.spacingCoef}px) rotate(90deg)`
           } else {
             div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(90deg)`
           }
@@ -110,7 +112,7 @@ export default class Game {
         case 'd':
           dirNb = 2
           if (this.isMobile) {
-            div.style.transform = `translate(0%, -50%) translateY(-${time * this.spacingCoef}px) rotate(180deg)`
+            div.style.transform = `translate(0%, 0%) translateY(-${time * this.spacingCoef}px) rotate(180deg)`
           } else {
             div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(180deg)`
           }
@@ -118,7 +120,7 @@ export default class Game {
         case 'l':
           dirNb = 3
           if (this.isMobile) {
-            div.style.transform = `translate(0%, -50%) translateY(-${time * this.spacingCoef}px) rotate(270deg)`
+            div.style.transform = `translate(0%, 0%) translateY(-${time * this.spacingCoef}px) rotate(270deg)`
           } else {
             div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(270deg)`
           }
@@ -267,7 +269,7 @@ export default class Game {
     for (let i = 0; i < this.dataDir.length; i++) {
       const { time, div } = this.dataDir[i]
 
-      if (time + margin + 0.2 <= this.delta) {
+      if (time + margin <= this.delta) {
         div.classList.add('missed')
       }
     }
