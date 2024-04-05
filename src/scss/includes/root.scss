@@ -1,7 +1,6 @@
 html {
   box-sizing: border-box;
   overflow: hidden;
-  touch-action: manipulation;
 
   &.scroll {
     overflow: visible;
@@ -12,6 +11,7 @@ html {
 ::before,
 ::after {
   box-sizing: inherit;
+  touch-action: manipulation;
 }
 
 body {
@@ -21,7 +21,6 @@ body {
   position: relative;
   font-family: 'faster-one';
   height: 100vh;
-  touch-action: manipulation;
 }
 
 a {
