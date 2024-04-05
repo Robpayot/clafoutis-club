@@ -12,6 +12,8 @@ html {
 ::after {
   box-sizing: inherit;
   touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
 body {
