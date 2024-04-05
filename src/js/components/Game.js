@@ -1,7 +1,7 @@
 import GUI from 'lil-gui'
 import { lerp, distance } from '@/js/utils/Math'
 import gsap from 'gsap'
-import DATA from '../../data/timestamps.json'
+import DATA from '../../data/timestamps_2.json'
 import { getRandomInt, roundTo } from '../utils/Math'
 import { Howl, Howler } from 'howler'
 import { isTouch } from '../utils/isTouch'
@@ -9,7 +9,7 @@ import { isTouch } from '../utils/isTouch'
 export default class Game {
   el
   guiObj = {
-    marginError: 0.1,
+    marginError: 0.15,
   }
   mouse = {
     x: 0,
