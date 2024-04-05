@@ -10,7 +10,11 @@ import Game from '@/js/components/Game'
   }),
     new MutationObserver((e) => {
       e.forEach(function (e) {
-        for (let o = 0; o < e.addedNodes.length; o++) e.addedNodes[o].style['touch-action'] = 'manipulation'
+        for (let o = 0; o < e.addedNodes.length; o++) {
+          if (e.addedNodes[o]?.style?.['touch-action']) {
+            e.addedNodes[o].style['touch-action'] = 'manipulation'
+          }
+        }
       })
     }).observe(document.body, { childList: !0, subtree: !0 })
 })()
