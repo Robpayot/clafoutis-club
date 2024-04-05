@@ -28,6 +28,7 @@ export default class Game {
   isTouch = isTouch()
   isMobile = window.innerWidth < window.innerHeight
   maxBonus = 1
+  maxCumul = 0
 
   constructor(el) {
     this.el = el
@@ -247,7 +248,7 @@ export default class Game {
     this.scoreMessageEl.classList.add('visible')
     this.scoreMessageEl.classList.remove('lose')
     this.scoreMessageEl.classList.remove('win')
-    this.scoreMessageEl.innerHTML = `Congrats! Bonus max: x${this.maxBonus}`
+    this.scoreMessageEl.innerHTML = `Bravo! Cumulés: x${this.maxCumul}`
     this.el.classList.remove('start')
     this.el.classList.add('end')
   }
@@ -291,6 +292,9 @@ export default class Game {
           this.cumulate = true
 
           this.cumul += 1
+          if (this.maxCumul < this.cumul) {
+            this.maxCumul = this.cumul
+          }
 
           let points = 100
 
