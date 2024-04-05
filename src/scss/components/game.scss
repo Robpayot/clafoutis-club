@@ -14,6 +14,7 @@
   background-position: center center;
   color: white;
   font-size: 20px;
+  touch-action: manipulation;
 
   &.start {
     .game__start {
@@ -188,6 +189,7 @@
     width: 50vw;
     height: 50vw;
     z-index: 100;
+    touch-action: manipulation;
     .is-touch & {
       display: block;
     }
