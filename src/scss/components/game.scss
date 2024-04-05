@@ -70,6 +70,7 @@
     border-left: 1px solid white;
 
     .is-mobile & {
+      border-left: 1px solid transparent;
       width: 100vw;
       height: 50vh;
       transform: translateY(-20%);
