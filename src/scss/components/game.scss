@@ -149,7 +149,7 @@
       .game__arrow-inner {
         transform: scale(2);
         opacity: 0;
-        transition: opacity 0.3s linear 0.1s, transform 0.3s var(--ease-out-bounce);
+        transition: opacity 0.15s linear 0.1s, transform 0.15s var(--ease-out-bounce);
       }
     }
 
