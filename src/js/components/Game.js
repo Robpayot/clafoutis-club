@@ -32,6 +32,7 @@ export default class Game {
 
   constructor(el) {
     this.el = el
+    this.arrowRefEl = document.querySelector('[data-arrow-svg]')
     this.introEl = document.querySelector('[data-intro]')
     this.enterEl = document.querySelector('[data-intro-enter]')
     this.loaderEl = document.querySelector('[data-loader]')
@@ -53,7 +54,7 @@ export default class Game {
       document.body.classList.add('is-touch')
     }
     this.handleResize()
-    this.setGUI()
+    // this.setGUI()
     this.events()
     this.setArrows()
   }
@@ -88,7 +89,7 @@ export default class Game {
       let dirNb
       const div = document.createElement('div')
       div.classList.add('game__arrow')
-      const inner = document.createElement('div')
+      const inner = this.arrowRefEl.cloneNode(true)
       inner.classList.add('game__arrow-inner')
       div.appendChild(inner)
 
@@ -96,35 +97,39 @@ export default class Game {
         case 'u':
           dirNb = 0
           if (this.isMobile) {
-            div.style.transform = `translate(0%, 0%) translateY(-${time * this.spacingCoef}px)`
-          } else {
-            div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px)`
-          }
-          break
-        case 'r':
-          dirNb = 1
-          if (this.isMobile) {
             div.style.transform = `translate(0%, 0%) translateY(-${time * this.spacingCoef}px) rotate(90deg)`
           } else {
             div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(90deg)`
           }
-
+          div.classList.add('up')
           break
-        case 'd':
-          dirNb = 2
+        case 'r':
+          dirNb = 1
           if (this.isMobile) {
             div.style.transform = `translate(0%, 0%) translateY(-${time * this.spacingCoef}px) rotate(180deg)`
           } else {
             div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(180deg)`
           }
+          div.classList.add('right')
+
           break
-        case 'l':
-          dirNb = 3
+        case 'd':
+          dirNb = 2
           if (this.isMobile) {
             div.style.transform = `translate(0%, 0%) translateY(-${time * this.spacingCoef}px) rotate(270deg)`
           } else {
             div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px) rotate(270deg)`
           }
+          div.classList.add('down')
+          break
+        case 'l':
+          dirNb = 3
+          if (this.isMobile) {
+            div.style.transform = `translate(0%, 0%) translateY(-${time * this.spacingCoef}px)`
+          } else {
+            div.style.transform = `translate(-50%, -50%) translateX(${time * this.spacingCoef}px)`
+          }
+          div.classList.add('left')
           break
       }
 
@@ -132,6 +137,8 @@ export default class Game {
 
       this.arrows.appendChild(div)
     })
+
+    this.arrowRefEl.style.display = 'none'
   }
 
   initSound = () => {
@@ -298,34 +305,47 @@ export default class Game {
 
           let points = 100
 
+          let isCombo = false
+
           if (this.cumul >= 20) {
             points *= 5
             this.scoreMessageEl.innerHTML = 'x5!'
             if (this.maxBonus < 5) {
               this.maxBonus = 5
             }
+            isCombo = true
           } else if (this.cumul >= 15) {
             points *= 4
             this.scoreMessageEl.innerHTML = 'x4!'
             if (this.maxBonus < 4) {
               this.maxBonus = 4
             }
+            isCombo = true
           } else if (this.cumul >= 10) {
             points *= 3
             this.scoreMessageEl.innerHTML = 'x3!'
             if (this.maxBonus < 3) {
               this.maxBonus = 3
             }
+            isCombo = true
           } else if (this.cumul >= 5) {
             points *= 2
             this.scoreMessageEl.innerHTML = 'x2!'
             if (this.maxBonus < 2) {
               this.maxBonus = 2
             }
+            isCombo = true
+          }
+
+          if (isCombo) {
+            this.scoreMessageEl.classList.remove('win')
+            this.scoreMessageEl.classList.add('combo')
+          } else {
+            this.scoreMessageEl.classList.add('win')
+            this.scoreMessageEl.classList.remove('combo')
           }
 
           this.scoreMessageEl.classList.add('visible')
-          this.scoreMessageEl.classList.add('win')
           this.scoreMessageEl.classList.remove('lose')
 
           this.timeoutMsg = setTimeout(() => {
@@ -344,6 +364,7 @@ export default class Game {
 
           this.scoreMessageEl.classList.add('visible')
           this.scoreMessageEl.classList.remove('win')
+          this.scoreMessageEl.classList.remove('combo')
           this.scoreMessageEl.classList.add('lose')
 
           this.timeoutMsg = setTimeout(() => {
