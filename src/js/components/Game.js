@@ -75,6 +75,12 @@ export default class Game {
         el.addEventListener('touchstart', this.handleControlStart)
         el.addEventListener('touchend', this.handleControlEnd)
       })
+
+      // prevent double tap zoom on Safari iOS
+      this.controlsEl[0].parentNode.addEventListener('click', (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+      })
     } else {
       window.addEventListener('keydown', this.handleKeydown)
       window.addEventListener('keyup', this.handleKeyup)
@@ -255,6 +261,7 @@ export default class Game {
     this.scoreMessageEl.classList.add('visible')
     this.scoreMessageEl.classList.remove('lose')
     this.scoreMessageEl.classList.remove('win')
+    this.scoreMessageEl.classList.remove('combo')
     this.scoreMessageEl.innerHTML = `Bravo! Cumulés: x${this.maxCumul}`
     this.el.classList.remove('start')
     this.el.classList.add('end')
@@ -345,8 +352,12 @@ export default class Game {
             this.scoreMessageEl.classList.remove('combo')
           }
 
-          this.scoreMessageEl.classList.add('visible')
           this.scoreMessageEl.classList.remove('lose')
+
+          this.scoreMessageEl.classList.remove('visible')
+          setTimeout(() => {
+            this.scoreMessageEl.classList.add('visible')
+          })
 
           this.timeoutMsg = setTimeout(() => {
             this.scoreMessageEl.classList.remove('visible')

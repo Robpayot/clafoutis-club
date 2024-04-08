@@ -92,7 +92,7 @@
     border-left: 1px solid transparent;
 
     .is-mobile & {
-      width: 100vw;
+      width: 70vw;
       height: 50vh;
       transform: translateY(-25%);
       border-bottom: 1px solid transparent;
@@ -192,6 +192,7 @@
     .is-mobile & {
       top: calc(65%);
       font-size: 30px;
+      width: 70vw;
     }
 
     &.win {
@@ -230,8 +231,8 @@
     display: none;
     position: absolute;
     bottom: 30px;
-    width: 40vw;
-    height: 40vw;
+    width: 48vw;
+    height: 48vw;
     z-index: 100;
     touch-action: manipulation;
     .is-touch & {
