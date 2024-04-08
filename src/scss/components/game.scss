@@ -16,6 +16,19 @@
   font-size: 20px;
   touch-action: manipulation;
 
+  &.visible {
+    .game__container {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .game__start {
+      transform: translate(-50%, -50%);
+      transition: transform 0.3s var(--ease-out-bounce) 0.2s;
+      will-change: transform;
+    }
+  }
+
   &.start {
     .game__start {
       transform: translate(-50%, 0%) translateY(50vh);
@@ -50,12 +63,9 @@
         font-size: 40px;
       }
     }
-  }
 
-  &.visible {
-    .game__container {
-      opacity: 1;
-      visibility: visible;
+    .game__controls {
+      display: none;
     }
   }
 
@@ -186,7 +196,7 @@
     font-size: 40px;
     transform: translate(-50%, -50%) scale(0.4);
     opacity: 0;
-    transition: opacity 0.15s linear, transform 0.15s var(--ease-out-bounce) 0.5s;
+    transition: opacity 0.1s linear, transform 0.1s var(--ease-out-bounce) 0s;
     will-change: transform;
 
     .is-mobile & {
@@ -210,7 +220,7 @@
     &.visible {
       opacity: 1;
       transform: translate(-50%, -50%) scale(1);
-      transition: opacity 0.15s linear, transform 0.15s var(--ease-out-bounce);
+      transition: opacity 0.1s linear, transform 0.1s var(--ease-out-bounce);
     }
   }
 
@@ -277,7 +287,7 @@
     position: absolute;
     top: calc(50%);
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.5);
     cursor: pointer;
     z-index: 100;
     color: #ffbe3e;

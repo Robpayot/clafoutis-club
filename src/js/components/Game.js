@@ -357,7 +357,7 @@ export default class Game {
           this.scoreMessageEl.classList.remove('visible')
           setTimeout(() => {
             this.scoreMessageEl.classList.add('visible')
-          })
+          }, 50)
 
           this.timeoutMsg = setTimeout(() => {
             this.scoreMessageEl.classList.remove('visible')
@@ -373,7 +373,10 @@ export default class Game {
           this.cumulate = false
           this.scoreMessageEl.innerHTML = 'Bad!'
 
-          this.scoreMessageEl.classList.add('visible')
+          this.scoreMessageEl.classList.remove('visible')
+          setTimeout(() => {
+            this.scoreMessageEl.classList.add('visible')
+          }, 50)
           this.scoreMessageEl.classList.remove('win')
           this.scoreMessageEl.classList.remove('combo')
           this.scoreMessageEl.classList.add('lose')
