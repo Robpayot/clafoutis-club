@@ -264,7 +264,7 @@ export default class Game {
     this.scoreMessageEl.classList.remove('lose')
     this.scoreMessageEl.classList.remove('win')
     this.scoreMessageEl.classList.remove('combo')
-    this.scoreMessageEl.innerHTML = `Bravo! Cumulés: x${this.maxCumul}`
+    this.scoreMessageEl.innerHTML = `Bravo! ${this.maxCumul} de suite`
     this.el.classList.remove('start')
     this.el.classList.add('end')
   }
