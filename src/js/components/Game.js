@@ -32,6 +32,7 @@ export default class Game {
 
   constructor(el) {
     this.el = el
+    this.videoEl = document.querySelector('[data-game-video]')
     this.arrowRefEl = document.querySelector('[data-arrow-svg]')
     this.introEl = document.querySelector('[data-intro]')
     this.enterEl = document.querySelector('[data-intro-enter]')
@@ -238,6 +239,7 @@ export default class Game {
 
   startGame = () => {
     if (!this.init) return
+    this.videoEl.play()
     this.el.classList.remove('end')
     this.el.classList.add('start')
     // this.timeStart = Date.now()
