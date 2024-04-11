@@ -361,7 +361,7 @@
     align-items: center;
     flex-direction: column;
 
-    .is-mobile {
+    .is-mobile  &{
       top: 65%;
       transform: translateY(-100%) translateY(-20px);
     }
