@@ -43,6 +43,7 @@ export default class Game {
     this.scoreEl = document.querySelector('[data-game-score]')
     this.scoreMessageEl = document.querySelector('[data-game-score-message]')
     this.startEl = document.querySelector('[data-intro-start]')
+    this.restartEl = document.querySelector('[data-game-replay]')
     this.controlsEl = document.querySelectorAll('[data-game-control]')
 
     if (this.isMobile) {
@@ -69,6 +70,7 @@ export default class Game {
     this.enterEl.addEventListener('click', this.initSound)
 
     this.startEl.addEventListener('click', this.startGame)
+    this.restartEl.addEventListener('click', this.startGame)
     window.addEventListener('resize', this.handleResize, false)
 
     if (this.isTouch) {
@@ -259,6 +261,9 @@ export default class Game {
     this.howlPlayer.pause()
     this.howlPlayer.seek(0)
     this.howlPlayer.play()
+
+    //
+    this.endGame()
   }
 
   endGame = () => {

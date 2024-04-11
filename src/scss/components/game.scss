@@ -56,8 +56,9 @@
 
   &.end {
     .game__start {
-      transform: translate(-50%, -50%);
-      transition: transform 0.6s var(--ease-out-quad);
+      display: none;
+      // transform: translate(-50%, -50%);
+      // transition: transform 0.6s var(--ease-out-quad);
     }
 
     .game__time {
@@ -65,6 +66,7 @@
         text-align: center;
         margin-left: 0;
         font-size: 40px;
+        top: 100px;
       }
     }
 
@@ -76,6 +78,11 @@
 
     .game__controls {
       display: none;
+    }
+
+    .game__outro {
+      opacity: 1;
+      visibility: visible;
     }
   }
 
@@ -310,6 +317,48 @@
 
     &:hover {
       transform: translate(-50%, -50%) scale(1.2);
+    }
+  }
+
+  &__outro {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    transform: translateY(0%) translateY(-20px);
+    width: 100%;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .is-mobile {
+      top: 65%;
+      transform: translateY(-100%) translateY(-20px);
+    }
+  }
+
+  &__button {
+    display: inline-block;
+    background-color: #000000;
+    border-radius: 10px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    margin-bottom: 20px;
+    width: 300px;
+    padding: 10px 10px;
+    font-size: 22px;
+    cursor: pointer;
+
+    transition: transform 0.3s var(--ease-out-bounce);
+    &:hover {
+      transform: scale(1.15);
+    }
+
+    .is-mobile {
+      width: 200px;
     }
   }
 }
