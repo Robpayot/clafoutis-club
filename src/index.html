@@ -28,7 +28,18 @@
   <body>
     <main>
       <section data-intro class="intro visible">
+        <div class="intro__header">
+          <img src="/img/ClafouDance_Logo.png" class="intro__logo" />
+          <p class="intro__jeu indie">Le jeu officiel</p>
+        </div>
         <div data-intro-enter class="intro__enter">Démarrer</div>
+        <div class="intro__rules indie">
+          <p>Regles du jeu :</p>
+          <p>1. Allume le son à fond</p>
+          <p>2. Appuie sur les flèches en rythme</p>
+          <p>3. Fais le meilleur score</p>
+          <p>4. Inscris ta légende</p>
+        </div>
       </section>
       <section data-loader class="loader">
         <div class="loader__text">Chargement...</div>
@@ -56,7 +67,7 @@
             <path d="M8.12302e-07 68.118L85.282 9.12588L85.282 127.11L8.12302e-07 68.118Z" fill="currentColor" />
           </svg>
           <div class="game__time">
-            <p class="game__score">Score: <span data-game-score>0</span></p>
+            <p class="game__score">Score: <span class="fugaz" data-game-score>0</span></p>
             <p class="roboto">Input: <span data-game-time-input></span></p>
             <p class="roboto">Time: <span data-game-time></span></p>
           </div>
@@ -64,6 +75,7 @@
             <div data-game-arrows class="game__arrows"></div>
           </div>
           <div data-game-score-message class="game__score-message"></div>
+
           <div class="game__controls">
             <div data-game-control="0" class="game__control">
               <svg width="100%" viewBox="0 0 512 512" enable-background="new 0 0 512 512" xml:space="preserve">

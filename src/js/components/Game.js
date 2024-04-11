@@ -240,6 +240,7 @@ export default class Game {
   startGame = () => {
     if (!this.init) return
     this.scoreMessageEl.innerHTML = ''
+    this.scoreMessageEl.classList.remove('fugaz')
     this.videoEl.play()
     this.el.classList.remove('end')
     this.el.classList.add('start')
@@ -262,12 +263,14 @@ export default class Game {
 
   endGame = () => {
     this.scoreMessageEl.classList.add('visible')
+    this.scoreMessageEl.classList.add('fugaz')
     this.scoreMessageEl.classList.remove('lose')
     this.scoreMessageEl.classList.remove('win')
     this.scoreMessageEl.classList.remove('combo')
     this.scoreMessageEl.innerHTML = `Bravo! ${this.maxCumul} de suite`
     this.el.classList.remove('start')
     this.el.classList.add('end')
+    this.startEl.innerHTML = 'Rejouer'
   }
 
   handleRAF = (time, o) => {
