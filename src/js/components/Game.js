@@ -46,6 +46,7 @@ export default class Game {
     this.startEl = document.querySelector('[data-intro-start]')
     this.restartEl = document.querySelector('[data-game-replay]')
     this.controlsEl = document.querySelectorAll('[data-game-control]')
+    this.countdownEl = document.querySelector('[data-countdown]')
 
     if (this.isMobile) {
       document.body.classList.add('is-mobile')
@@ -264,7 +265,68 @@ export default class Game {
     this.howlPlayer.seek(0)
     this.howlPlayer.play()
 
-    //
+    const tl = gsap.timeline()
+
+    tl.fromTo(
+      this.countdownEl.children[0],
+      {
+        opacity: 1,
+        scale: 1,
+      },
+      {
+        opacity: 0,
+        scale: 0,
+        duration: 1.5,
+      }
+    )
+
+    tl.add(() => {
+      this.countdownEl.children[1].style.opacity = 1
+    })
+
+    tl.fromTo(
+      this.countdownEl.children[1],
+      {
+        scale: 1,
+      },
+      {
+        opacity: 0,
+        scale: 0,
+        duration: 1.5,
+      }
+    )
+
+    tl.add(() => {
+      this.countdownEl.children[2].style.opacity = 1
+    })
+
+    tl.fromTo(
+      this.countdownEl.children[2],
+      {
+        scale: 1,
+      },
+      {
+        opacity: 0,
+        scale: 0,
+        duration: 1.5,
+      }
+    )
+
+    tl.add(() => {
+      this.countdownEl.children[3].style.opacity = 1
+    })
+
+    tl.fromTo(
+      this.countdownEl.children[3],
+      {
+        scale: 1,
+      },
+      {
+        opacity: 0,
+        scale: 0,
+        duration: 1.5,
+      }
+    )
   }
 
   endGame = () => {
@@ -273,7 +335,10 @@ export default class Game {
     this.scoreMessageEl.classList.remove('lose')
     this.scoreMessageEl.classList.remove('win')
     this.scoreMessageEl.classList.remove('combo')
-    this.scoreMessageEl.innerHTML = `Bravo! ${this.maxCumul} de suite <br /> ${(this.count / DATA.length * 100).toFixed(2)}%`
+    this.scoreMessageEl.innerHTML = `Bravo! ${this.maxCumul} de suite <br /> ${(
+      (this.count / DATA.length) *
+      100
+    ).toFixed(2)}%`
     this.el.classList.remove('start')
     this.el.classList.add('end')
     this.startEl.innerHTML = 'Rejouer'

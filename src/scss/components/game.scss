@@ -52,6 +52,9 @@
         border-bottom: 1px solid white;
       }
     }
+
+    .game__countdown {
+    }
   }
 
   &.end {
@@ -317,6 +320,30 @@
 
     &:hover {
       transform: translate(-50%, -50%) scale(1.2);
+    }
+  }
+
+  &__countdown {
+    font-size: 50vw;
+    position: absolute;
+    z-index: 1000;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+
+    .is-mobile & {
+      font-size: 90vw;
+    }
+
+    p {
+      opacity: 0;
+      transform: scale(1);
+      position: absolute;
+      z-index: 1000;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
   }
 
