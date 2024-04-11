@@ -217,9 +217,9 @@
     will-change: transform;
 
     .is-mobile & {
+      width: 100%;
       top: calc(65%);
-      font-size: 30px;
-      width: 70vw;
+      font-size: 27px;
     }
 
     &.win {

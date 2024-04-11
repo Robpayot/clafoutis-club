@@ -29,6 +29,7 @@ export default class Game {
   isMobile = window.innerWidth < window.innerHeight
   maxBonus = 1
   maxCumul = 0
+  count = 0
 
   constructor(el) {
     this.el = el
@@ -253,6 +254,7 @@ export default class Game {
       el.div.classList.remove('passed')
     })
     this.score = 0
+    this.count = 0
     this.scoreEl.innerHTML = this.score
     this.timeStart = null
     this.arrows.style.transform = `translateX(50vw)`
@@ -263,7 +265,6 @@ export default class Game {
     this.howlPlayer.play()
 
     //
-    this.endGame()
   }
 
   endGame = () => {
@@ -272,7 +273,7 @@ export default class Game {
     this.scoreMessageEl.classList.remove('lose')
     this.scoreMessageEl.classList.remove('win')
     this.scoreMessageEl.classList.remove('combo')
-    this.scoreMessageEl.innerHTML = `Bravo! ${this.maxCumul} de suite`
+    this.scoreMessageEl.innerHTML = `Bravo! ${this.maxCumul} de suite <br /> ${(this.count / DATA.length * 100).toFixed(2)}%`
     this.el.classList.remove('start')
     this.el.classList.add('end')
     this.startEl.innerHTML = 'Rejouer'
@@ -314,6 +315,7 @@ export default class Game {
           // deltaInput is inside this period
           // console.log('good!')
           this.scoreMessageEl.innerHTML = 'Good!'
+          this.count++
           this.cumulate = true
 
           this.cumul += 1
