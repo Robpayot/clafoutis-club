@@ -255,6 +255,8 @@
     height: 48vw;
     z-index: 100;
     touch-action: manipulation;
+    max-width: 250px;
+    max-height: 250px;
     .is-touch & {
       display: block;
     }
@@ -265,8 +267,12 @@
     height: 15vw;
     // background-color: black;
     position: absolute;
-    background-image: url('/img/up-arrow-w.png');
-    background-size: contain;
+
+    max-width: 90px;
+    max-height: 90px;
+    svg {
+      pointer-events: none;
+    }
 
     &:nth-child(1) {
       left: 50%;

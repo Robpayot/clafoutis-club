@@ -239,6 +239,7 @@ export default class Game {
 
   startGame = () => {
     if (!this.init) return
+    this.scoreMessageEl.innerHTML = ''
     this.videoEl.play()
     this.el.classList.remove('end')
     this.el.classList.add('start')
