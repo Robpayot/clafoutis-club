@@ -349,7 +349,7 @@ export default class Game {
 
     this.emailEl.setAttribute(
       'href',
-      `mailto:pedrowinter@clafoutisclub.com&body=J’ai fait ${this.score} points grâce a ce super jeu ! Me voilà conquis par votre créativité et je vais écouter votre musique de ce pas
+      `mailto:pedrowinter@clafoutisclub.com?body=J’ai fait ${this.score} points grâce a ce super jeu ! Me voilà conquis par votre créativité et je vais écouter votre musique de ce pas
     À bientôt`
     )
 
