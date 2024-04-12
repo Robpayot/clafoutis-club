@@ -64,6 +64,17 @@
       // transition: transform 0.6s var(--ease-out-quad);
     }
 
+    .game__score-message__main {
+      text-shadow: 0px 3px 8px #d800ff;
+    }
+
+    .game__score-message__end {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      text-shadow: 0px 3px 8px #ffbe3e;
+    }
+
     .game__time {
       .is-mobile & {
         text-align: center;
@@ -83,7 +94,8 @@
       display: none;
     }
 
-    .game__outro {
+    .game__outro,
+    .game__robin {
       opacity: 1;
       visibility: visible;
     }
@@ -198,6 +210,7 @@
     transform: translate(-50%, -50%);
     z-index: 100;
     width: 100%;
+    text-shadow: 0px 3px 8px #ef5959;
     // text-align: right;
 
     .is-mobile & {
@@ -242,10 +255,31 @@
       transform: translate(-50%, -50%) scale(1);
       transition: opacity 0.1s linear, transform 0.1s var(--ease-out-bounce);
     }
+
+    &__main {
+      margin-top: 20px;
+      .is-mobile & {
+        margin-top: 80px;
+      }
+    }
+
+    &__end {
+      transform: scale(0.4);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s linear, visibility 0.3s linear, transform 0.3s var(--ease-out-bounce) 0s;
+      transition-delay: 1s;
+      will-change: transform;
+      white-space: nowrap;
+
+      .is-mobile & {
+        white-space: wrap;
+      }
+    }
   }
 
   &__score {
-    font-size: 50px;
+    font-size: 67px;
     margin-bottom: 20px;
 
     .is-mobile & {
@@ -316,7 +350,7 @@
     transform: translate(-50%, -50%) scale(0.5);
     cursor: pointer;
     z-index: 100;
-    color: #ffbe3e;
+    text-shadow: 0px 3px 8px #ffbe3e;
 
     &:hover {
       transform: translate(-50%, -50%) scale(1.2);
@@ -353,7 +387,7 @@
     position: absolute;
     z-index: 100;
     top: 50%;
-    transform: translateY(0%) translateY(-20px);
+    transform: translateY(0%) translateY(20px);
     width: 100%;
     transition: opacity 0.5s ease, visibility 0.5s ease;
     display: flex;
@@ -361,7 +395,7 @@
     align-items: center;
     flex-direction: column;
 
-    .is-mobile  &{
+    .is-mobile & {
       top: 65%;
       transform: translateY(-100%) translateY(-20px);
     }
@@ -386,6 +420,40 @@
 
     .is-mobile {
       width: 200px;
+    }
+  }
+
+  &__robin {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    z-index: 100;
+    bottom: 20px;
+    right: 20px;
+
+    a {
+      display: inline-block;
+      position: relative;
+      &:hover {
+        &::before {
+          width: 0%;
+          right: auto;
+          left: 0;
+        }
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        background-color: white;
+        width: 100%;
+        height: 1px;
+        bottom: 0;
+        right: 0;
+        left: auto;
+
+        transition: width 0.7s var(--ease-out-quint);
+      }
     }
   }
 }
@@ -419,6 +487,7 @@
       transform: translate(-50%, -50%) scale(1.2);
     }
   }
+
   &__header {
     position: absolute;
     z-index: 100;
@@ -434,9 +503,11 @@
       transform: translateY(-10px);
     }
   }
+
   &__logo {
     width: 400px;
   }
+
   &__rules {
     position: absolute;
     z-index: 100;

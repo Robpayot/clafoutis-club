@@ -43,10 +43,13 @@ export default class Game {
     this.timeInputEl = document.querySelector('[data-game-time-input]')
     this.scoreEl = document.querySelector('[data-game-score]')
     this.scoreMessageEl = document.querySelector('[data-game-score-message]')
+    this.scoreMessageParentEl = document.querySelector('[data-game-score-message-parent]')
+
     this.startEl = document.querySelector('[data-intro-start]')
     this.restartEl = document.querySelector('[data-game-replay]')
     this.controlsEl = document.querySelectorAll('[data-game-control]')
     this.countdownEl = document.querySelector('[data-countdown]')
+    this.emailEl = document.querySelector('[data-game-email]')
 
     if (this.isMobile) {
       document.body.classList.add('is-mobile')
@@ -330,15 +333,22 @@ export default class Game {
   }
 
   endGame = () => {
-    this.scoreMessageEl.classList.add('visible')
+    this.scoreMessageParentEl.classList.add('visible')
     this.scoreMessageEl.classList.add('fugaz')
-    this.scoreMessageEl.classList.remove('lose')
-    this.scoreMessageEl.classList.remove('win')
-    this.scoreMessageEl.classList.remove('combo')
+    this.scoreMessageParentEl.classList.remove('lose')
+    this.scoreMessageParentEl.classList.remove('win')
+    this.scoreMessageParentEl.classList.remove('combo')
     this.scoreMessageEl.innerHTML = `Bravo! ${this.maxCumul} de suite <br /> ${(
       (this.count / DATA.length) *
       100
     ).toFixed(2)}%`
+
+    this.emailEl.setAttribute(
+      'href',
+      `mailto:pedrowinter@clafoutisclub.com&body=J’ai fait ${this.score} points grâce a ce super jeu ! Me voilà conquis par votre créativité et je vais écouter votre musique de ce pas
+    À bientôt`
+    )
+
     this.el.classList.remove('start')
     this.el.classList.add('end')
     this.startEl.innerHTML = 'Rejouer'
@@ -423,22 +433,22 @@ export default class Game {
           }
 
           if (isCombo) {
-            this.scoreMessageEl.classList.remove('win')
-            this.scoreMessageEl.classList.add('combo')
+            this.scoreMessageParentEl.classList.remove('win')
+            this.scoreMessageParentEl.classList.add('combo')
           } else {
-            this.scoreMessageEl.classList.add('win')
-            this.scoreMessageEl.classList.remove('combo')
+            this.scoreMessageParentEl.classList.add('win')
+            this.scoreMessageParentEl.classList.remove('combo')
           }
 
-          this.scoreMessageEl.classList.remove('lose')
+          this.scoreMessageParentEl.classList.remove('lose')
 
-          this.scoreMessageEl.classList.remove('visible')
+          this.scoreMessageParentEl.classList.remove('visible')
           setTimeout(() => {
-            this.scoreMessageEl.classList.add('visible')
+            this.scoreMessageParentEl.classList.add('visible')
           }, 50)
 
           this.timeoutMsg = setTimeout(() => {
-            this.scoreMessageEl.classList.remove('visible')
+            this.scoreMessageParentEl.classList.remove('visible')
           }, 300)
 
           this.score += points
@@ -451,16 +461,16 @@ export default class Game {
           this.cumulate = false
           this.scoreMessageEl.innerHTML = 'Bad!'
 
-          this.scoreMessageEl.classList.remove('visible')
+          this.scoreMessageParentEl.classList.remove('visible')
           setTimeout(() => {
-            this.scoreMessageEl.classList.add('visible')
+            this.scoreMessageParentEl.classList.add('visible')
           }, 50)
-          this.scoreMessageEl.classList.remove('win')
-          this.scoreMessageEl.classList.remove('combo')
-          this.scoreMessageEl.classList.add('lose')
+          this.scoreMessageParentEl.classList.remove('win')
+          this.scoreMessageParentEl.classList.remove('combo')
+          this.scoreMessageParentEl.classList.add('lose')
 
           this.timeoutMsg = setTimeout(() => {
-            this.scoreMessageEl.classList.remove('visible')
+            this.scoreMessageParentEl.classList.remove('visible')
           }, 300)
           // this.score--
           // console.log('bad!')

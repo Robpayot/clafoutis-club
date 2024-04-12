@@ -80,11 +80,14 @@
           <div class="game__overlay">
             <div data-game-arrows class="game__arrows"></div>
           </div>
-          <div data-game-score-message class="game__score-message"></div>
+          <div data-game-score-message-parent class="game__score-message">
+            <p data-game-score-message class="game__score-message__main"></p>
+            <p class="game__score-message__end fugaz">Screen et partage ! @clafoutis_club</p>
+          </div>
 
           <div class="game__outro indie">
             <div data-game-replay class="game__button">Rejouer</div>
-            <a href="mailto:pedrowinter@clafoutisclub.com" class="game__button">partager</a>
+            <a data-game-email href="mailto:pedrowinter@clafoutisclub.com" class="game__button">partager</a>
             <a
               href="https://open.spotify.com/intl-fr/track/23ni2mO1DVtfJKaEythuHC?si=35da0c2419b34406"
               target="_blank"
@@ -230,6 +233,10 @@
                 />
               </svg>
             </div>
+          </div>
+
+          <div class="game__robin fugaz">
+            Coded with &#x1F49B; by <a href="https://robinpayot.com/" target="_blank">Robin Payot</a>
           </div>
         </div>
       </section>
