@@ -330,6 +330,10 @@ export default class Game {
         duration: 1.5,
       }
     )
+
+    // setTimeout(() => {
+    //   this.endGame()
+    // }, 8000)
   }
 
   endGame = () => {

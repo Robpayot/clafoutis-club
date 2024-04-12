@@ -46,10 +46,10 @@
     }
 
     .game__overlay {
-      border-left: 1px solid white;
+      border-left: 3px solid white;
       .is-mobile & {
-        border-left: 1px solid transparent;
-        border-bottom: 1px solid white;
+        border-left: 3px solid transparent;
+        border-bottom: 3px solid white;
       }
     }
 
@@ -62,6 +62,13 @@
       display: none;
       // transform: translate(-50%, -50%);
       // transition: transform 0.6s var(--ease-out-quad);
+    }
+
+    .game__score-message {
+      .is-mobile & {
+        top: calc(65%);
+        font-size: 28px;
+      }
     }
 
     .game__score-message__main {
@@ -231,11 +238,12 @@
     opacity: 0;
     transition: opacity 0.1s linear, transform 0.1s var(--ease-out-bounce) 0s;
     will-change: transform;
+    pointer-events: none;
 
     .is-mobile & {
-      width: 100%;
-      top: calc(65%);
-      font-size: 27px;
+      width: 80%;
+      top: calc(40%);
+      font-size: 40px;
     }
 
     &.win {
@@ -273,7 +281,7 @@
       white-space: nowrap;
 
       .is-mobile & {
-        white-space: wrap;
+        white-space: normal;
       }
     }
   }
