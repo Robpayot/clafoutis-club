@@ -259,6 +259,9 @@ export default class Game {
     })
     this.score = 0
     this.count = 0
+    this.cumul = 0
+    this.maxBonus = 1
+    this.maxCumul = 0
     this.scoreEl.innerHTML = this.score
     this.timeStart = null
     this.arrows.style.transform = `translateX(50vw)`
@@ -349,8 +352,8 @@ export default class Game {
 
     this.emailEl.setAttribute(
       'href',
-      `mailto:pedrowinter@clafoutisclub.com?body=J’ai fait ${this.score} points grâce a ce super jeu ! Me voilà conquis par votre créativité et je vais écouter votre musique de ce pas
-    À bientôt`
+      `mailto:pedrowinter@clafoutis-club.com?body=Incroyable ! J’ai fait ${this.score} points grâce a ce super jeu ! Me voilà conquis par votre créativité et je vais écouter votre musique de ce pas.
+    À bientôt.`
     )
 
     this.el.classList.remove('start')

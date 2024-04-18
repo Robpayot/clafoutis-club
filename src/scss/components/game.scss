@@ -46,10 +46,10 @@
     }
 
     .game__overlay {
-      border-left: 3px solid white;
+      border-left: 10px solid white;
       .is-mobile & {
-        border-left: 3px solid transparent;
-        border-bottom: 3px solid white;
+        border-left: 10px solid transparent;
+        border-bottom: 10px solid white;
       }
     }
 
